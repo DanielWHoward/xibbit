@@ -26,6 +26,8 @@
     "protractor": "^7.0.0"
   },
   "scripts": {
+    "prebuild": "rimraf --glob \"dist\"",
+    "build": "cpx \"app/**\" dist",
     "postinstall": "npm run copy-libs",
     "update-deps": "npm update",
     "postupdate-deps": "npm run copy-libs",
