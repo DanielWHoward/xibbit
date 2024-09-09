@@ -511,12 +511,22 @@ class XibDb {
         if (array_key_exists($col, $jsonMap)) {
           $compat = false;
           if (gettype($desc[$col]) === gettype($jsonMap[$col])) {
-            $compat = true;
+            if (gettype($desc[$col]) === 'object') {
+              // be pickier with Object types
+              if (($desc[$col] instanceof DateTime) && ($jsonMap[$col] instanceof DateTime)) {
+                $compat = true;
+              }
+            } else {
+              $compat = true;
+            }
           }
           if (is_float($desc[$col]) && is_int($jsonMap[$col])) {
             $compat = true;
           }
           if (is_string($desc[$col])) {
+            $compat = true;
+          }
+          if (($desc[$col] instanceof DateTime) && is_string($jsonMap[$col])) {
             $compat = true;
           }
           if ($compat) {
@@ -987,12 +997,22 @@ class XibDb {
           $compat = false;
           if (array_key_exists($col, $desc)) {
             if (gettype($desc[$col]) === gettype($jsonMap[$col])) {
-              $compat = true;
+              if (gettype($desc[$col]) === 'object') {
+                // be pickier with Object types
+                if (($desc[$col] instanceof DateTime) && ($jsonMap[$col] instanceof DateTime)) {
+                  $compat = true;
+                }
+              } else {
+                $compat = true;
+              }
             }
             if (is_float($desc[$col]) && is_int($jsonMap[$col])) {
               $compat = true;
             }
             if (is_string($desc[$col])) {
+              $compat = true;
+            }
+            if (($desc[$col] instanceof DateTime) && is_string($jsonMap[$col])) {
               $compat = true;
             }
             if ($compat) {
